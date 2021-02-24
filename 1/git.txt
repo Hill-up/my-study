@@ -1,2 +1,15 @@
+cd 修改路径
+pwd 查看目录下的目路
+ls 查看目录下的文件
+echo "内容" > 文件名   创建一个文件（文件名）
+echo "内容" >> 文件名  将内容追加到 文件名
+
+ssh-keygen -t rsa -C "邮箱"  创建ssh密钥绑定
+
 git常用命令
 git init  初始git
+git add  提交
+git commit -m "备注信息" 提交的版本库
+git remote add origin "git地址"  与远程库绑定
+git push -u origin master 提交到远程库
+git pull 更新
