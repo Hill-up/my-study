@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>购物车</title>
+    <style>
+        .active{
+            background: #f00;
+        }
+    </style>
+</head>
+<body>
+    <!-- 宿主对象 -->
+    <div id="app">
+        
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        //1,创建vue实例
+        const app=new Vue({
+            el:"#app", //指定宿主对象
+            data() { //值
+                return {
+                    title: "小褚购物车",
+                    course:'',
+                    courses:["冰箱","彩电","洗衣机"],
+                    selectedCourse:""
+                }
+            },
+            methods: {
+                addCourse() {
+                    this.courses.push(this.course)
+                    this.course=""
+                }
+            },
+            render(){                
+with(this){return _c('div',{attrs:{"id":"app"}},[_l((courses),function(c){return _c('ul',{key:c,style:({backgroundColor: selectedCourse === c ? '#d00':'transparent'}),on:{"click":function($event){selectedCourse=c}}},[_c('li',[_v(_s(c))])])}),_v(" "),(courses.length == 0)?_c('p',[_v("没有产品")]):_c('p',[_v("有产品")]),_v(" "),_c('p',{directives:[{name:"show",rawName:"v-show",value:(courses.length != 0),expression:"courses.length != 0"}]},[_v("没有产品")])],2)}
+}            
+        })
+        console.log(app.$options.render);
+    </script>
+</body>
+</html>
