@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .message{
+            position:fixed;
+            top:30px;
+            left:50%;
+            margin-left: -170px;
+            width: 300px;
+            height: 50px;
+            padding: 0 20px;
+            line-height: 50px;
+            
+            border-radius:5px;
+        }
+        .ok{
+            background: #cfc;
+        }
+        .no{
+            background: #fcc;
+        }
+        .message span{
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- <h2>组件传值</h2>        
+        <list-add @add-list="addList"></list-add>
+        <hr>
+        <list-ul :list="list"></list-ul> -->
+
+        <h2>组件传值</h2>        
+        <list-add v-model="value" @add-list="addList"></list-add>        
+        <hr>
+        <list-ul :list="list"></list-ul>
+
+        <message :show.sync="isShow" :status="status">{{messageData}}</message>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        Vue.component("list-add",{  
+            props:["value"],       
+            template:`
+                <div>
+                    <h3>输入组件</h3>
+                    <input type="text" :value="value" @input="onInput">
+                    <button @click="addList">添加</button>    
+                </div>
+            `,
+            methods:{
+                addList(){                    
+                    this.$emit("add-list")                    
+                },
+                onInput(e){                    
+                    this.$emit("input",e.target.value)
+                }
+            }
+        })
+        
+        Vue.component("list-ul",{
+            props:{
+                list:{
+                    type:Array,
+                    default:[]
+                }
+            },
+            template:`
+                <div>
+                    <h2>列表</h2>
+                    <ul>
+                        <li v-for="i in list" :key="i">{{i}}</li>    
+                    </ul>
+                </div>
+            `
+        })
+        
+        Vue.component("message",{
+            props:["show","status"],
+            template:`
+                <div class="message" :class="status=='1'?'ok':'no'" v-if="show">
+                    <slot></slot>
+                    <span @click="$emit('update:show',false)">X</span>    
+                </div>
+            `            
+        })
+        new Vue({
+            el:"#app",
+            data(){
+                return{
+                    value:"",         
+                    isShow:false,     
+                    messageData:"",
+                    status:"",     
+                    list:[1,2],
+                }
+            },
+            methods:{
+                addList(){
+                    if(this.value){
+                        this.list.push(this.value)
+                        this.messageData="添加成功"
+                        this.status="1"
+                        this.value=""
+                        this.isShow=true
+                        this.timingClosure()
+                    }else{
+                        this.messageData="请输入添加内容"
+                        this.status=""
+                        this.isShow=true
+                        this.timingClosure()
+                    }                    
+                },
+                timingClosure(){
+                    setTimeout(() => {
+                        this.isShow=false
+                    }, 3000);  
+                },                
+
+            }
+        })
+    </script>
+</body>
+</html>

@@ -75,3 +75,25 @@ beforeDestroy(){       组件销毁前调用
 destroyed(){            组件销毁后调用
 
 }
+
+
+<name :value="向子组件传值" @事件名="xxx"></name>   $event 表示穿的值
+component("name",{      组件
+    porp:{              接受数据
+        value:{
+            type:Array  //
+        }
+    }
+    ,template:`
+        <div>
+            <slot></slot>   插槽  直接写内容传递到此
+        </div>
+    `      定义组件内容
+    ,methods:{
+        functionName(){
+            this.$emit("传递事件名(事件名)","向父组件穿的值")
+        }
+    }
+})
+
+@click.sync 子组件调用 update:click    访问到本事件
